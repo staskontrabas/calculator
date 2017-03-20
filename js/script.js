@@ -25,6 +25,8 @@ $(document).ready(function(){
 						this.param.price = this.getPrice(obj.programms[0].props);
 						this.param.first_pay = this.getFirstPay(obj.programms[0].props);
 						this.param.date_end = this.getDate(obj.programms[0].props);
+						
+						sendCalc();
 					}
 				}
 			},
@@ -71,7 +73,7 @@ $(document).ready(function(){
 				var fpay;
 				for(var i in props){
 					if(props[i].id == 'first_pay'){
-						fpay = this.param.pay_type == 1 ? props[i].min : props[i].max;
+						fpay = this.param.pay_type == 1 ? props[i].min : props[i].min;
 					}
 				}
 				return parseInt(fpay * this.param.price);
@@ -143,6 +145,7 @@ $(document).ready(function(){
 										$(".input-box[name='price']").append('<input type="text" name="price" id="price" class="form-control roboto-bold" value="'+beatNum(obj.programms[k].props[l].defaultValue)+'" />');
 							}
 							if(obj.programms[k].props[l].id == 'first_pay'){
+										//$(".input-box[name='first_pay']").append('<input type="text" name="first_pay" id="first_pay" class="form-control roboto-bold" value="'+beatNum(parseInt(obj.programms[k].props[l-1].defaultValue * obj.programms[k].props[l].min))+'" />');
 										$(".input-box[name='first_pay']").append('<input type="text" name="first_pay" id="first_pay" class="form-control roboto-bold" value="'+beatNum(parseInt(obj.programms[k].props[l-1].defaultValue * obj.programms[k].props[l].min))+'" />');
 							}
 							if(obj.programms[k].props[l].id == 'date'){
@@ -155,15 +158,21 @@ $(document).ready(function(){
 		}
 	};
 	
+	var drawRes = function(res){
+		$(".right-side[name='title']").html(res.data.title);
+		$(".right-side[name='desc']").html(res.data.values[0].title);
+		$(".right-side[name='pay_type']").html(beatNum(res.data.values[0].value));
+	};
+	
 	var sendCalc = function(){
-		var send = JSON.stringify({data: programm.param});
-				
+		var send = programm.param;
+			
 		$.ajax({
 			url: 'https://api.trend-spb.ru/v2/installment',
-			type: "POST",
+			type: "GET",
 			data: send,
 			success: function(res){
-				console.log(res);
+				drawRes(res);
 			}
 		});
 	};
