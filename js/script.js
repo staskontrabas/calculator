@@ -160,7 +160,7 @@ $(document).ready(function(){
 				
 		$.ajax({
 			url: 'https://api.trend-spb.ru/v2/installment',
-			type: "GET",
+			type: "POST",
 			data: send,
 			success: function(res){
 				console.log(res);
