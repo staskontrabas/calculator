@@ -27,20 +27,6 @@ $(document).ready(function(){
 						this.param.date_end = this.getDate(obj.programms[0].props);
 					}
 				}
-				
-				
-				
-				
-				
-				/*
-				this.param.building = $("#building").val();
-				this.param.programm_id = $("#programm_id").val();
-				this.param.pay_type = $("#pay_type").val();
-				//this.param.price = makeNum($("#price").val());
-				//this.param.first_pay = makeNum($("#first_pay").val());
-				//this.param.date_end = makeNum($("#date").val());
-				this.set();
-				this.render();*/
 			},
 			get: function(){
 				return this.param;
